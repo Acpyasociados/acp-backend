@@ -269,4 +269,75 @@ async function createMercadoPagoPreference(lead) {
 
   try {
     const response = await axios.post(
-      'https://api
+      'https://api.mercadopago.com/checkout/preferences',
+      preferencePayload,
+      {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    return { ok: true, data: response.data };
+  } catch (error) {
+    console.error('Mercado Pago error:', error.response?.data || error.message);
+    return { ok: false, error: error.response?.data?.message || error.message };
+  }
+}
+
+async function sendAdvisorEmail(lead) {
+  const sendgridKey = process.env.SENDGRID_API_KEY;
+  const advisorEmail = process.env.ADVISOR_EMAIL || 'asesor.pac@gmail.com';
+
+  if (!sendgridKey) {
+    throw new Error('Missing SENDGRID_API_KEY');
+  }
+
+  const emailContent = `
+    <h2>Nuevo Lead - ${lead.company}</h2>
+    <p><strong>Nombre:</strong> ${lead.name}</p>
+    <p><strong>Email:</strong> ${lead.email}</p>
+    <p><strong>Teléfono:</strong> ${lead.phone}</p>
+    <p><strong>Rubro:</strong> ${lead.sector}</p>
+    <p><strong>Ventas Mensuales:</strong> $${Number(lead.monthly_sales).toLocaleString('es-CL')}</p>
+    <p><strong>Plan:</strong> ${lead.plan.toUpperCase()}</p>
+    <p><strong>Precio Final:</strong> $${lead.final_price.toLocaleString('es-CL')}</p>
+    <p><strong>Link Checkout:</strong> <a href="${lead.checkout_url}">Ver pago</a></p>
+    <p><strong>ID Lead:</strong> ${lead.lead_id}</p>
+  `;
+
+  try {
+    await axios.post(
+      'https://api.sendgrid.com/v3/mail/send',
+      {
+        personalizations: [{
+          to: [{ email: advisorEmail }],
+          subject: `Nuevo Lead: ${lead.company}`
+        }],
+        from: { email: 'noreply@acp.cl', name: 'ACP Diagnóstico' },
+        content: [{ type: 'text/html', value: emailContent }]
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${sendgridKey}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+  } catch (error) {
+    console.error('SendGrid error:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+// Error handling
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err);
+  res.status(500).json({ error: 'Internal server error' });
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`🚀 ACP Backend running on port ${PORT}`);
+  console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
+});
