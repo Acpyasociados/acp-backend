@@ -157,7 +157,9 @@ app.post('/api/validate-coupon', (req, res) => {
     'TESTBASICO': { valid: true, discount: 100, plans: ['basico'] },
     'TESTPREMIUM': { valid: true, discount: 100, plans: ['premium'] },
     'DESC50': { valid: true, discount: 50, plans: ['basico', 'premium'] },
+    'DESC90': { valid: true, discount: 90, plans: ['basico', 'premium'] },
     'STARTUP30': { valid: true, discount: 30, plans: ['premium'] },
+    'TIHARE90': { valid: true, discount: 90, plans: ['basico', 'premium'] },
   };
 
   const couponKey = coupon.toUpperCase().trim();
