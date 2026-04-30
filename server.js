@@ -18,13 +18,14 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 // Base de datos en memoria (sin sqlite3)
 const leadsStore = {};
 
 
-// Rutas
-app.get('/', (req, res) => {
+// Rutas API
+app.get('/api/', (req, res) => {
   res.json({ message: 'ACP Backend operativo', status: 'running' });
 });
 

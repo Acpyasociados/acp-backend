@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnóstico de Crecimiento y Rentabilidad</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #1a2d3e 0%, #2a3f52 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a2d3e 0%, #2a3f52 100%);
+      color: #d4a574;
+      padding: 40px 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .header p {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 40px 30px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1a2d3e;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #d4a574;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      color: #1a2d3e;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    input[type="number"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #d4a574;
+      box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .radio-item,
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #d4a574;
+    }
+
+    .radio-item label,
+    .checkbox-item label {
+      margin-bottom: 0;
+      margin-top: 0;
+      font-weight: normal;
+      cursor: pointer;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    button {
+      padding: 14px 40px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #d4a574 0%, #c89560 100%);
+      color: white;
+      flex: 1;
+      max-width: 300px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(212, 165, 116, 0.4);
+    }
+
+    .btn-reset {
+      background: #f5f5f5;
+      color: #1a2d3e;
+      flex: 1;
+      max-width: 300px;
+    }
+
+    .btn-reset:hover {
+      background: #e0e0e0;
+    }
+
+    .footer {
+      background: #f9f9f9;
+      padding: 20px 30px;
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+    }
+
+    .success-message {
+      display: none;
+      background: #d4f1d4;
+      color: #1a5f1a;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    .note {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #856404;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        border-radius: 0;
+      }
+
+      .header {
+        padding: 25px 15px;
+      }
+
+      .header h1 {
+        font-size: 22px;
+      }
+
+      .content {
+        padding: 25px 15px;
+      }
+
+      .radio-group,
+      .checkbox-group {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn-submit,
+      .btn-reset {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Diagnóstico de Crecimiento y Rentabilidad</h1>
+      <p>Completa el formulario con tu información para obtener tu diagnóstico personalizado</p>
+    </div>
+
+    <div class="content">
+      <div class="note">
+        ℹ️ <strong>Nota:</strong> Completa todos los campos con la información más precisa posible. Esto nos ayudará a brindarte recomendaciones personalizadas.
+      </div>
+
+      <form id="diagnosticForm">
+        <!-- Sección 1: Información de Contacto -->
+        <div class="section">
+          <div class="section-title">1. Información de Contacto</div>
+
+          <div class="form-group">
+            <label for="nombre">Nombre Completo *</label>
+            <input type="text" id="nombre" name="nombre" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="telefono">Teléfono *</label>
+            <input type="tel" id="telefono" name="telefono" required>
+          </div>
+        </div>
+
+        <!-- Sección 2: Información de la Empresa -->
+        <div class="section">
+          <div class="section-title">2. Información de la Empresa</div>
+
+          <div class="form-group">
+            <label for="empresa">Nombre de la Empresa *</label>
+            <input type="text" id="empresa" name="empresa" required>
+          </div>
+
+          <div class="form-group">
+            <label>Rubro / Sector *</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="radio" id="rubro1" name="sector" value="servicios_profesionales" required>
+                <label for="rubro1">Servicios profesionales</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="radio" id="rubro2" name="sector" value="comercio_ecommerce" required>
+                <label for="rubro2">Comercio / E-commerce</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="radio" id="rubro3" name="sector" value="servicios_terreno" required>
+                <label for="rubro3">Servicios en terreno</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="ventas">Ventas Mensuales (CLP) *</label>
+            <input type="text" id="ventas" name="ventas" placeholder="Ej: 1.000.000" required>
+          </div>
+
+          <div class="form-group">
+            <label for="margen">Margen de Ganancia Estimado (%) *</label>
+            <input type="number" id="margen" name="margen" placeholder="Ej: 30" min="0" max="100" required>
+          </div>
+
+          <div class="form-group">
+            <label for="clientes">Cantidad de Clientes Activos *</label>
+            <input type="number" id="clientes" name="clientes" placeholder="Ej: 50" min="0" required>
+          </div>
+
+          <div class="form-group">
+            <label for="rut">RUT de la Empresa *</label>
+            <input type="text" id="rut" name="rut" placeholder="Ej: 78.327.647-K" required>
+          </div>
+        </div>
+
+        <!-- Sección 3: Información Digital y Operacional -->
+        <div class="section">
+          <div class="section-title">3. Presencia Digital y Operacional</div>
+
+          <div class="form-group">
+            <label>¿La empresa está en redes sociales actualmente? *</label>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input type="radio" id="redes_si" name="redes_sociales" value="si" required>
+                <label for="redes_si">Sí</label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" id="redes_no" name="redes_sociales" value="no" required>
+                <label for="redes_no">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>¿Cuáles plataformas usa? (Opcional)</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="plat_fb" name="plataformas" value="facebook">
+                <label for="plat_fb">Facebook</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="plat_ig" name="plataformas" value="instagram">
+                <label for="plat_ig">Instagram</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="plat_linkedin" name="plataformas" value="linkedin">
+                <label for="plat_linkedin">LinkedIn</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="plat_web" name="plataformas" value="website">
+                <label for="plat_web">Sitio Web</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="plat_whatsapp" name="plataformas" value="whatsapp">
+                <label for="plat_whatsapp">WhatsApp Business</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="consumo_combustible">Consumo Mensual de Combustible (Litros) - Si aplica *</label>
+            <input type="number" id="consumo_combustible" name="consumo_combustible" placeholder="Ej: 500" min="0">
+          </div>
+
+          <div class="form-group">
+            <label for="contador">Nombre del Contador o Asesor Tributario (Opcional)</label>
+            <input type="text" id="contador" name="contador" placeholder="Ej: Juan Pérez, Contador SpA">
+          </div>
+        </div>
+
+        <!-- Sección 4: Análisis Financiero -->
+        <div class="section">
+          <div class="section-title">4. Análisis Financiero</div>
+
+          <div class="form-group">
+            <label for="costos">Top 3 Costos Principales *</label>
+            <textarea id="costos" name="costos" placeholder="Ej: personal, arriendo, publicidad" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="canal">Canal Principal de Adquisición *</label>
+            <textarea id="canal" name="canal" placeholder="Ej: referidos, Meta Ads, Google Ads, orgánico" required></textarea>
+          </div>
+        </div>
+
+        <!-- Sección 5: Diagnóstico y Objetivos -->
+        <div class="section">
+          <div class="section-title">5. Diagnóstico y Objetivos</div>
+
+          <div class="form-group">
+            <label for="problema">¿Cuál es tu Problema Principal? *</label>
+            <textarea id="problema" name="problema" placeholder="Ej: bajo cierre, costos altos, poca recompra, crecimiento lento" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="objetivo">Objetivo a 6 Meses *</label>
+            <textarea id="objetivo" name="objetivo" placeholder="Ej: subir ventas 20%, estabilizar margen, ordenar operación" required></textarea>
+          </div>
+        </div>
+
+        <!-- Sección 6: Selección de Plan -->
+        <div class="section">
+          <div class="section-title">6. Selección de Plan</div>
+
+          <div class="form-group">
+            <label>¿Cuál plan prefieres? *</label>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input type="radio" id="plan1" name="plan" value="basico" required>
+                <label for="plan1"><strong>Básico</strong> - $49.900 (Informe + 3 mejoras)</label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" id="plan2" name="plan" value="premium" required>
+                <label for="plan2"><strong>Premium</strong> - $149.900 (Plan 30/90/180 días)</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="button-group">
+          <button type="submit" class="btn-submit">✓ Enviar Información</button>
+          <button type="reset" class="btn-reset">Limpiar Formulario</button>
+        </div>
+
+        <div class="success-message" id="successMsg">
+          ✅ <strong>¡Formulario completado!</strong><br>
+          Tu información se ha capturado correctamente. Pronto nos pondremos en contacto.
+        </div>
+      </form>
+    </div>
+
+    <div class="footer">
+      <p>Sistema de Diagnóstico ACP | Todos los campos con * son obligatorios</p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('diagnosticForm');
+    const successMsg = document.getElementById('successMsg');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Capturar datos
+      // Obtener plataformas seleccionadas
+      const plataformasSeleccionadas = Array.from(document.querySelectorAll('input[name="plataformas"]:checked'))
+        .map(el => el.value)
+        .join(', ');
+
+      const datos = {
+        nombre: document.getElementById('nombre').value,
+        email: document.getElementById('email').value,
+        telefono: document.getElementById('telefono').value,
+        empresa: document.getElementById('empresa').value,
+        rut: document.getElementById('rut').value,
+        sector: document.querySelector('input[name="sector"]:checked').value,
+        ventas: document.getElementById('ventas').value,
+        margen: document.getElementById('margen').value,
+        clientes: document.getElementById('clientes').value,
+        redes_sociales: document.querySelector('input[name="redes_sociales"]:checked').value,
+        plataformas: plataformasSeleccionadas || 'ninguna',
+        consumo_combustible: document.getElementById('consumo_combustible').value || 'no aplica',
+        contador: document.getElementById('contador').value || 'sin información',
+        costos: document.getElementById('costos').value,
+        canal: document.getElementById('canal').value,
+        problema: document.getElementById('problema').value,
+        objetivo: document.getElementById('objetivo').value,
+        plan: document.querySelector('input[name="plan"]:checked').value
+      };
+
+      // Crear mensaje para copiar
+      const mensaje = `
+📋 DATOS DEL DIAGNÓSTICO
+================================
+
+👤 CONTACTO:
+Nombre: ${datos.nombre}
+Email: ${datos.email}
+Teléfono: ${datos.telefono}
+
+🏢 EMPRESA:
+Nombre: ${datos.empresa}
+RUT: ${datos.rut}
+Rubro: ${datos.sector}
+Ventas Mensuales: $${datos.ventas}
+Margen: ${datos.margen}%
+Clientes Activos: ${datos.clientes}
+
+🌐 PRESENCIA DIGITAL:
+En redes sociales: ${datos.redes_sociales === 'si' ? 'Sí' : 'No'}
+Plataformas activas: ${datos.plataformas}
+
+⛽ OPERACIONAL:
+Consumo mensual combustible: ${datos.consumo_combustible} litros
+Contador/Asesor: ${datos.contador}
+
+💰 FINANCIERO:
+Costos Principales: ${datos.costos}
+Canal Principal: ${datos.canal}
+
+🎯 DIAGNÓSTICO:
+Problema: ${datos.problema}
+Objetivo 6M: ${datos.objetivo}
+
+📦 PLAN SELECCIONADO: ${datos.plan.toUpperCase()}
+
+================================
+      `.trim();
+
+      // Copiar al portapapeles
+      navigator.clipboard.writeText(mensaje).then(() => {
+        // Mostrar mensaje de éxito
+        successMsg.classList.add('show');
+
+        // Desplazarse al mensaje
+        successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        // Ocultar mensaje después de 5 segundos
+        setTimeout(() => {
+          successMsg.classList.remove('show');
+        }, 5000);
+
+        // Opcional: abrir email con los datos
+        // window.open(`mailto:asesor.pac@gmail.com?subject=Diagnóstico - ${datos.empresa}&body=${encodeURIComponent(mensaje)}`);
+      }).catch(err => {
+        alert('Error al copiar. Por favor, copia manualmente los datos.');
+        console.log(mensaje);
+      });
+    });
+  </script>
+</body>
+</html>
