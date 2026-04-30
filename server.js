@@ -84,6 +84,4 @@ async function createMercadoPagoPreference(lead) {
 }
 
 app.listen(PORT, () => {
-    console.log(`Servidor ejecutándose en puerto ${PORT}`);
-    console.log(`Formulario disponible en /`);
-});
+    console.log(`Servidor 

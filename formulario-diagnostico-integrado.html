@@ -502,7 +502,7 @@
                         Nombre de la Empresa
                         <span class="required">*</span>
                     </label>
-                    <input type="text" id="company_name" name="company_name" placeholder="Ej: Transportes Aravena" required>
+                    <input type="text" id="company_name" name="company_name" placeholder="Ej: Mi Empresa SpA" required>
                 </div>
 
                 <div class="form-group">
@@ -511,7 +511,7 @@
                         <span class="required">*</span>
                         <span class="label-hint">(formato: 12.345.678-9)</span>
                     </label>
-                    <input type="text" id="rut" name="rut" placeholder="78.327.647-K" required>
+                    <input type="text" id="rut" name="rut" placeholder="12.345.678-9" required>
                 </div>
 
                 <div class="form-row">
@@ -725,15 +725,14 @@
                 </div>
 
                 <!-- Benefits -->
-                <div class="benefits">
+                <div class="benefits" id="benefitsContainer">
                     <h3>✓ Qué incluye tu diagnóstico:</h3>
-                    <ul>
+                    <ul id="benefitsList">
                         <li>Análisis de oportunidades de crecimiento personalizadas</li>
                         <li>Reducción de costos operacionales identificada</li>
                         <li>Estrategias de optimización tributaria aplicables</li>
                         <li>Plan de acción 30 días para implementar</li>
                         <li>Informe profesional en HTML + PDF</li>
-                        <li>5 casos de empresas comparables que crecieron en tu sector</li>
                     </ul>
                 </div>
 
@@ -801,13 +800,61 @@
             });
         });
 
+        // Definir contenido dinámico por plan
+        const PLAN_CONTENT = {
+            basico: {
+                price: 49990,
+                priceText: '$49.990',
+                benefits: [
+                    'Análisis de oportunidades de crecimiento personalizadas',
+                    'Reducción de costos operacionales identificada',
+                    'Estrategias de optimización tributaria aplicables',
+                    'Plan de acción 30 días para implementar',
+                    'Informe profesional en HTML + PDF'
+                ]
+            },
+            premium: {
+                price: 149990,
+                priceText: '$149.990',
+                benefits: [
+                    'Análisis de oportunidades de crecimiento personalizadas',
+                    'Reducción de costos operacionales identificada',
+                    'Estrategias de optimización tributaria aplicables',
+                    'Plan de acción 30 días para implementar',
+                    'Informe profesional en HTML + PDF',
+                    'Plan de implementación 30/90/180 días detallado',
+                    'Seguimiento y consultoría por WhatsApp durante 3 meses',
+                    '5 casos de empresas comparables que crecieron en tu sector',
+                    'Análisis de competencia sectorial',
+                    'Proyecciones financieras a 12 meses',
+                    'Sesión 1:1 de 30 minutos con asesor'
+                ]
+            }
+        };
+
+        // Función para actualizar beneficios
+        function updatePlanContent(planType) {
+            const plan = PLAN_CONTENT[planType];
+            const benefitsList = document.getElementById('benefitsList');
+
+            // Actualizar lista de beneficios
+            benefitsList.innerHTML = plan.benefits
+                .map(benefit => `<li>${benefit}</li>`)
+                .join('');
+
+            // Actualizar texto del botón
+            submitText.textContent = `Continuar al Pago (${plan.priceText})`;
+        }
+
         // Actualizar texto del botón según plan seleccionado
         document.querySelectorAll('input[name="plan"]').forEach(radio => {
             radio.addEventListener('change', function() {
-                const price = this.value === 'premium' ? '$149.990' : '$49.990';
-                submitText.textContent = `Continuar al Pago (${price})`;
+                updatePlanContent(this.value);
             });
         });
+
+        // Inicializar con plan Básico
+        updatePlanContent('basico');
 
         // Form submission
         form.addEventListener('submit', async (e) => {
