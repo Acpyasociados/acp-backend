@@ -502,7 +502,7 @@
                         Nombre de la Empresa
                         <span class="required">*</span>
                     </label>
-                    <input type="text" id="company_name" name="company" placeholder="Ej: Transportes Aravena" required>
+                    <input type="text" id="company_name" name="company_name" placeholder="Ej: Mi Empresa SpA" required>
                 </div>
 
                 <div class="form-group">
@@ -511,7 +511,7 @@
                         <span class="required">*</span>
                         <span class="label-hint">(formato: 12.345.678-9)</span>
                     </label>
-                    <input type="text" id="rut" name="rut" placeholder="78.327.647-K" required>
+                    <input type="text" id="rut" name="rut" placeholder="12.345.678-9" required>
                 </div>
 
                 <div class="form-row">
@@ -520,14 +520,14 @@
                             Tu Nombre
                             <span class="required">*</span>
                         </label>
-                        <input type="text" id="contact_name" name="name" placeholder="Juan Pérez" required>
+                        <input type="text" id="contact_name" name="contact_name" placeholder="Juan Pérez" required>
                     </div>
                     <div class="form-group">
                         <label for="contact_phone">
                             WhatsApp
                             <span class="required">*</span>
                         </label>
-                        <input type="tel" id="contact_phone" name="phone" placeholder="+56 9 1234 5678" required>
+                        <input type="tel" id="contact_phone" name="contact_phone" placeholder="+56 9 1234 5678" required>
                     </div>
                 </div>
 
@@ -536,7 +536,7 @@
                         Email
                         <span class="required">*</span>
                     </label>
-                    <input type="email" id="contact_email" name="email" placeholder="tu@email.com" required>
+                    <input type="email" id="contact_email" name="contact_email" placeholder="tu@email.com" required>
                 </div>
 
                 <!-- SECCIÓN 2: PERFIL DEL NEGOCIO -->
@@ -547,7 +547,7 @@
                         Rubro / Sector
                         <span class="required">*</span>
                     </label>
-                    <select id="industry" name="sector" required>
+                    <select id="industry" name="industry" required>
                         <option value="">Selecciona tu rubro...</option>
                         <option value="servicios_profesionales">Servicios Profesionales (consultorías, asesorías, legales)</option>
                         <option value="comercio_ecommerce">Comercio / E-commerce</option>
@@ -562,13 +562,22 @@
                     </select>
                 </div>
 
+                <!-- Campo condicional: Especifica tu rubro -->
+                <div id="other_industry_group" class="form-group" style="display: none;">
+                    <label for="other_industry">
+                        Especifica tu rubro
+                        <span class="required">*</span>
+                    </label>
+                    <input type="text" id="other_industry" name="other_industry" placeholder="Describe tu rubro/sector">
+                </div>
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="annual_income">
                             Ingresos Mensuales (CLP)
                             <span class="required">*</span>
                         </label>
-                        <input type="text" id="annual_income" name="monthly_sales" placeholder="Ej: 23.000.000" required>
+                        <input type="text" id="annual_income" name="annual_income" placeholder="Ej: 23.000.000" required>
                     </div>
                     <div class="form-group">
                         <label for="margin">
@@ -587,6 +596,19 @@
                         </label>
                         <input type="number" id="active_clients" name="active_clients" placeholder="Ej: 50" min="0" required>
                     </div>
+                    <div class="form-group">
+                        <label for="tax_regime">
+                            Régimen Tributario
+                            <span class="required">*</span>
+                        </label>
+                        <select id="tax_regime" name="tax_regime" required>
+                            <option value="">Selecciona...</option>
+                            <option value="general">Régimen General</option>
+                            <option value="propyme">ProPyme</option>
+                            <option value="simplificado">Régimen Simplificado</option>
+                            <option value="no_se">No estoy seguro</option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- SECCIÓN 3: INFORMACIÓN OPERACIONAL -->
@@ -598,7 +620,7 @@
                         Top 3 Costos Principales
                         <span class="required">*</span>
                     </label>
-                    <textarea id="main_costs" name="top_costs" placeholder="Ej: Combustible, personal, arriendo" required></textarea>
+                    <textarea id="main_costs" name="main_costs" placeholder="Ej: Combustible, personal, arriendo" required></textarea>
                 </div>
 
                 <div class="form-group">
@@ -608,14 +630,48 @@
                     </label>
                     <div class="radio-group">
                         <div class="radio-item">
-                            <input type="radio" id="digital_yes" name="main_channel" value="digital" required>
+                            <input type="radio" id="digital_yes" name="digital_presence" value="si" required>
                             <label for="digital_yes">Sí, tengo presencia</label>
                         </div>
                         <div class="radio-item">
-                            <input type="radio" id="digital_no" name="main_channel" value="ninguna" required>
+                            <input type="radio" id="digital_no" name="digital_presence" value="no" required>
                             <label for="digital_no">No, empezaría desde cero</label>
                         </div>
                     </div>
+                </div>
+
+                <div class="form-group" id="platforms_group" style="display: none;">
+                    <label>¿En cuáles plataformas? (Opcional)</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="plat_facebook" name="plataformas" value="facebook">
+                            <label for="plat_facebook">Facebook</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="plat_instagram" name="plataformas" value="instagram">
+                            <label for="plat_instagram">Instagram</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="plat_linkedin" name="plataformas" value="linkedin">
+                            <label for="plat_linkedin">LinkedIn</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="plat_web" name="plataformas" value="web">
+                            <label for="plat_web">Sitio Web</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="plat_whatsapp" name="plataformas" value="whatsapp">
+                            <label for="plat_whatsapp">WhatsApp Business</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="accountant_name">
+                        Nombre del Contador o Asesor Tributario
+                        <span class="label-hint">(Opcional)</span>
+                    </label>
+                    <input type="text" id="accountant_name" name="accountant_name" placeholder="Ej: Juan García, Gestoría XYZ">
                 </div>
 
                 <!-- SECCIÓN 4: SITUACIÓN ACTUAL -->
@@ -626,7 +682,7 @@
                         ¿Cuál es tu mayor desafío ahora?
                         <span class="required">*</span>
                     </label>
-                    <select id="main_challenge" name="main_problem" required>
+                    <select id="main_challenge" name="main_challenge" required>
                         <option value="">Selecciona...</option>
                         <option value="costos_altos">Costos operativos muy altos</option>
                         <option value="margen_bajo">Margen de ganancia bajo</option>
@@ -639,12 +695,21 @@
                     </select>
                 </div>
 
+                <!-- Campo condicional: Especifica tu desafío -->
+                <div id="other_challenge_group" class="form-group" style="display: none;">
+                    <label for="other_challenge">
+                        Especifica tu desafío
+                        <span class="required">*</span>
+                    </label>
+                    <input type="text" id="other_challenge" name="other_challenge" placeholder="Describe tu desafío principal">
+                </div>
+
                 <div class="form-group">
                     <label for="objective_6m">
                         Objetivo a 6 Meses
                         <span class="required">*</span>
                     </label>
-                    <textarea id="objective_6m" name="goal_6m" placeholder="Ej: Aumentar ventas 20%, reducir costos, estabilizar margen..." required></textarea>
+                    <textarea id="objective_6m" name="objective_6m" placeholder="Ej: Aumentar ventas 20%, reducir costos, estabilizar margen..." required></textarea>
                 </div>
 
                 <!-- SECCIÓN 5: PLAN SELECCIONADO -->
@@ -670,15 +735,14 @@
                 </div>
 
                 <!-- Benefits -->
-                <div class="benefits">
+                <div class="benefits" id="benefitsContainer">
                     <h3>✓ Qué incluye tu diagnóstico:</h3>
-                    <ul>
+                    <ul id="benefitsList">
                         <li>Análisis de oportunidades de crecimiento personalizadas</li>
                         <li>Reducción de costos operacionales identificada</li>
                         <li>Estrategias de optimización tributaria aplicables</li>
                         <li>Plan de acción 30 días para implementar</li>
                         <li>Informe profesional en HTML + PDF</li>
-                        <li>5 casos de empresas comparables que crecieron en tu sector</li>
                     </ul>
                 </div>
 
@@ -726,16 +790,81 @@
         const submitBtn = document.getElementById('submitBtn');
         const submitText = document.getElementById('submitText');
         const successOverlay = document.getElementById('successOverlay');
+        const digitalPresenceRadios = document.querySelectorAll('input[name="digital_presence"]');
+        const platformsGroup = document.getElementById('platforms_group');
 
         let mercadoPagoLink = '';
+
+        // Mostrar/ocultar opciones de plataformas según selección
+        digitalPresenceRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'si') {
+                    platformsGroup.style.display = 'block';
+                } else {
+                    platformsGroup.style.display = 'none';
+                    // Desmarcar todas las plataformas
+                    document.querySelectorAll('input[name="plataformas"]').forEach(cb => {
+                        cb.checked = false;
+                    });
+                }
+            });
+        });
+
+        // Definir contenido dinámico por plan
+        const PLAN_CONTENT = {
+            basico: {
+                price: 49990,
+                priceText: '$49.990',
+                benefits: [
+                    'Análisis de oportunidades de crecimiento personalizadas',
+                    'Reducción de costos operacionales identificada',
+                    'Estrategias de optimización tributaria aplicables',
+                    'Plan de acción 30 días para implementar',
+                    'Informe profesional en HTML + PDF'
+                ]
+            },
+            premium: {
+                price: 149990,
+                priceText: '$149.990',
+                benefits: [
+                    'Análisis de oportunidades de crecimiento personalizadas',
+                    'Reducción de costos operacionales identificada',
+                    'Estrategias de optimización tributaria aplicables',
+                    'Plan de acción 30 días para implementar',
+                    'Informe profesional en HTML + PDF',
+                    'Plan de implementación 30/90/180 días detallado',
+                    'Seguimiento y consultoría por WhatsApp durante 3 meses',
+                    '5 casos de empresas comparables que crecieron en tu sector',
+                    'Análisis de competencia sectorial',
+                    'Proyecciones financieras a 12 meses',
+                    'Sesión 1:1 de 30 minutos con asesor'
+                ]
+            }
+        };
+
+        // Función para actualizar beneficios
+        function updatePlanContent(planType) {
+            const plan = PLAN_CONTENT[planType];
+            const benefitsList = document.getElementById('benefitsList');
+
+            // Actualizar lista de beneficios
+            benefitsList.innerHTML = plan.benefits
+                .map(benefit => `<li>${benefit}</li>`)
+                .join('');
+
+            // Actualizar texto del botón
+            submitText.textContent = `Continuar al Pago (${plan.priceText})`;
+        }
 
         // Actualizar texto del botón según plan seleccionado
         document.querySelectorAll('input[name="plan"]').forEach(radio => {
             radio.addEventListener('change', function() {
-                const price = this.value === 'premium' ? '$149.990' : '$49.990';
-                submitText.textContent = `Continuar al Pago (${price})`;
+                updatePlanContent(this.value);
             });
         });
+
+        // Inicializar con plan Básico
+        updatePlanContent('basico');
 
         // Form submission
         form.addEventListener('submit', async (e) => {
@@ -749,19 +878,25 @@
 
             // Collect data
             const formData = new FormData(form);
-            const data = Object.fromEntries(formData);
+            const plataformas = Array.from(document.querySelectorAll('input[name="plataformas"]:checked'))
+                .map(el => el.value)
+                .join(', ');
+
+            const data = {
+                timestamp: new Date().toISOString(),
+                product: document.getElementById('plan_basico').checked ? 'diagnostico_basico' : 'diagnostico_premium',
+                price: document.getElementById('plan_basico').checked ? 49990 : 149990,
+                ...Object.fromEntries(formData),
+                plataformas: plataformas || 'ninguna'
+            };
 
             // Show loading
             submitBtn.disabled = true;
             submitText.innerHTML = '<span class="spinner"></span>Procesando...';
 
             try {
-                // Detectar si estamos en localhost o producción
-                const baseUrl = window.location.hostname === 'localhost' 
-                    ? 'http://localhost:3000'
-                    : 'https://acp-backend-g3io.onrender.com';
-
-                const response = await fetch(baseUrl + '/api/submit-lead', {
+                // Save to Netlify Function
+                const response = await fetch('/.netlify/functions/create-diagnostic-order', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -771,9 +906,14 @@
 
                 const result = await response.json();
 
-                if (response.ok && result.checkout_url) {
-                    mercadoPagoLink = result.checkout_url;
+                if (response.ok && result.mercadoPagoUrl) {
+                    // Store MercadoPago link
+                    mercadoPagoLink = result.mercadoPagoUrl;
+
+                    // Show success overlay
                     successOverlay.classList.add('show');
+
+                    // Reset form
                     form.reset();
                 } else {
                     throw new Error(result.error || 'Error al procesar');
@@ -781,6 +921,7 @@
             } catch (error) {
                 console.error('Error:', error);
                 alert('Hubo un error al procesar tu solicitud. Por favor intenta de nuevo o contáctanos por WhatsApp al +56 9 4401 8594.');
+
                 submitBtn.disabled = false;
                 const price = document.getElementById('plan_basico').checked ? '$49.990' : '$149.990';
                 submitText.textContent = `Continuar al Pago (${price})`;
@@ -791,6 +932,7 @@
             if (mercadoPagoLink) {
                 window.location.href = mercadoPagoLink;
             } else {
+                // Fallback: just close overlay
                 successOverlay.classList.remove('show');
                 submitBtn.disabled = false;
                 const price = document.getElementById('plan_basico').checked ? '$49.990' : '$149.990';
@@ -799,4 +941,63 @@
         }
 
         // Format RUT as user types
-        document.getElementById('rut').ad
+        document.getElementById('rut').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^0-9kK]/g, '');
+
+            if (value.length > 1) {
+                const dv = value.slice(-1);
+                const number = value.slice(0, -1);
+
+                // Format with dots
+                const formatted = number.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                e.target.value = formatted + '-' + dv.toUpperCase();
+            }
+        });
+
+        // Format phone as user types
+        document.getElementById('contact_phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^0-9+]/g, '');
+
+            if (value.startsWith('56') && !value.startsWith('+56')) {
+                value = '+' + value;
+            }
+
+            e.target.value = value;
+        });
+
+        // Handle conditional fields for "Otro" options
+        const industrySelect = document.getElementById('industry');
+        const otherIndustryGroup = document.getElementById('other_industry_group');
+        const otherIndustryInput = document.getElementById('other_industry');
+
+        const mainChallengeSelect = document.getElementById('main_challenge');
+        const otherChallengeGroup = document.getElementById('other_challenge_group');
+        const otherChallengeInput = document.getElementById('other_challenge');
+
+        // Show/hide "Especifica tu rubro" when "Otro" is selected
+        industrySelect.addEventListener('change', function() {
+            if (this.value === 'otro') {
+                otherIndustryGroup.style.display = 'block';
+                otherIndustryInput.required = true;
+            } else {
+                otherIndustryGroup.style.display = 'none';
+                otherIndustryInput.required = false;
+                otherIndustryInput.value = '';
+            }
+        });
+
+        // Show/hide "Especifica tu desafío" when "Otro" is selected
+        mainChallengeSelect.addEventListener('change', function() {
+            if (this.value === 'otro') {
+                otherChallengeGroup.style.display = 'block';
+                otherChallengeInput.required = true;
+            } else {
+                otherChallengeGroup.style.display = 'none';
+                otherChallengeInput.required = false;
+                otherChallengeInput.value = '';
+            }
+        });
+    </script>
+
+</body>
+</html>
